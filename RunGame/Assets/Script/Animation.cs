@@ -50,18 +50,13 @@ public class Animation : MonoSingleton<Animation>
 
     IEnumerator GetAnimator()
     {
-        bool temp;
 
         while (true)
         {
-            temp = ActorManager.Instance.GetLoadComplate();
 
-            if(temp)
-            {
                 PlayerAnim = GameObject.FindGameObjectWithTag("ANIM").GetComponent<Animator>();
                 getAnimFin = true;
                 StopCoroutine("GetAnimator");
-            }
 
             yield return new WaitForSeconds(0.1f);
         }
