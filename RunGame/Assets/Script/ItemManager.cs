@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ItemManager : MonoSingleton<ItemManager>
 {
+    public delegate void delegate_Item();
+
+    public event delegate_Item GetItemProcess;
+
+
+
+    Item item;
+
     public Transform itemFolder;       // 아이템 담아둘 빈 오브젝트
 
     GameObject cloneItem;
@@ -17,11 +25,15 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     int BoxCountPerPoint;           // 체크포인트 마다의 박스 개수
 
+    int cloneItemCount;
+
+    public bool getItem = false;
+
     public bool select1 = false;
     public bool select2 = false;
 
 
-    void Start()
+    void Awake()
     {
         itemFolder = new GameObject("Item").GetComponent<Transform>();      // 하이라키상 아이템폴더 만들기
 
@@ -32,6 +44,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         checkPoint = GameObject.FindGameObjectsWithTag("CheckPoint");
 
         BoxCountPerPoint = 5;
+        cloneItemCount = 10;
 
 
         for (int i = 0; i < checkPoint.Length; i++)
@@ -49,16 +62,17 @@ public class ItemManager : MonoSingleton<ItemManager>
         //클론 생성하고 아이템 리스트에 Add
         for (int i = 0; i < temp_go.Length; i++)
         {
-            //cloneItem = Instantiate(temp_go[i]);
-            //cloneItem.SetActive(false);
-
-            //cloneItem.transform.SetParent(itemFolder);
-            list_Item.Add(temp_go[i]);
+                cloneItem = Instantiate(temp_go[i]);            // 클론생성
+                cloneItem.transform.SetParent(itemFolder);      // 하이라키상 아이템 폴더에 넣기
+                list_Item.Add(cloneItem);                       // 리스트에 추가
+                cloneItem.SetActive(false);                     // 비활성화
         }
     }
 
+    private void Start()
+    {
 
-
+    }
 
 
     void Update()

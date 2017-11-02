@@ -8,19 +8,30 @@ public class Item : MonoBehaviour
 
     public int itemType = 0;
 
+    bool _getItem = false;
+    public bool getItem
+    {
+        get { return _getItem; }
+        set { _getItem = value; }
+    }
+    
+
     //protected Enemy enemy;
 
     protected void Start()
     {
-        playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
+        playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         //enemy = GameObject.FindGameObjectWithTag("ENEMY").GetComponent<Enemy>();
     }
 
 
-    void OnTriggerEnter(Collider other)
+    protected void GetItem()
     {
-        if (other.tag.Equals("PLAYER") && (ItemManager.Instance.item1 == null || ItemManager.Instance.item2 == null))
+        if (ItemManager.Instance.item1 == null || ItemManager.Instance.item2 == null)
         {
+            //itemType = Random.Range(0, (int)ItemType.ITEM_MAX);
+            itemType = 1;
+
             switch (itemType)
             {
                 case (int)ItemType.ITEM_RAZER:
@@ -33,10 +44,7 @@ public class Item : MonoBehaviour
 
                 case (int)ItemType.ITEM_STUNGUN:
                     {
-                        this.transform.SetParent(playerTr.Find("Model/EvilbearG/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R"));
-                        this.transform.localPosition = new Vector3(-0.035f, 0.04f, 0.012f);
-                        this.transform.localScale = new Vector3(1f, 1f, 1f);
-                        this.transform.localRotation = Quaternion.Euler(180f, 180f, 180f);
+                        this.transform.SetParent(playerTr.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
                     }
                     break;
 
@@ -61,13 +69,15 @@ public class Item : MonoBehaviour
                         this.transform.position = playerTr.forward;
                     }
                     break;
-
-
             }
             ItemManager.Instance.AddItemToInven(this.gameObject);
+            getItem = false;
             this.gameObject.SetActive(false);
         }
     }
+
+        
+    
 
 
 }
