@@ -6,18 +6,19 @@ using UnityEngine.AI;
 
 public class BaseAI : MonoBehaviour
 {
-    int aiType = (int)AIType.NONE;
+    int aiType = (int)AIType.IDLE;
 
     NavMeshAgent enemyAgent;
 
-    CheckPoint checkPoint;
+    GameObject[] checkPoint;
 
     public int curCheckPoint = 0;
 
     void Start ()
     {
-        enemyAgent = ActorManager.Instance.cloneEnemy.GetComponent<NavMeshAgent>();
-        checkPoint = GameObject.FindGameObjectWithTag("CheckPoint").GetComponent<CheckPoint>();
+        enemyAgent = GetComponent<NavMeshAgent>();
+
+        checkPoint = GameObject.FindGameObjectsWithTag("CheckPoint");
 
         StartCoroutine("RunAI");
     }
@@ -33,12 +34,6 @@ public class BaseAI : MonoBehaviour
         {
             switch (aiType)
             {
-                case (int)AIType.NONE:
-                    {
-                        aiType = (int)AIType.IDLE;
-                    }
-                    break;
-
                 case (int)AIType.IDLE:
                     {
                         aiType = (int)AIType.RUN;
@@ -58,11 +53,18 @@ public class BaseAI : MonoBehaviour
     }
     void SetMove()
     {
-        if (checkPoint.pointNum == curCheckPoint)
+        for (int i = 0; i < checkPoint.Length; i++)
         {
-            enemyAgent.SetDestination(checkPoint.transform.position);
+            CheckPoint go = checkPoint[i].GetComponent<CheckPoint>();
+
+            if (go.pointNum == curCheckPoint)
+            {
+                enemyAgent.SetDestination(go.transform.position);
+                break;
+            }
         }
-        if (enemyAgent.pathStatus == NavMeshPathStatus.PathComplete)
+
+        if (enemyAgent.transform.position == enemyAgent.destination)
             curCheckPoint++;
     }
 }

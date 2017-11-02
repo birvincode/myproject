@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActorManager : MonoSingleton<ActorManager>
 {
-    List<GameObject> list_Enemy = new List<GameObject>();
+    public List<GameObject> list_Enemy = new List<GameObject>();
     public GameObject cloneEnemy;
 
 

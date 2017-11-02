@@ -7,33 +7,58 @@ public class ItemManager : MonoSingleton<ItemManager>
     public Transform itemFolder;       // 아이템 담아둘 빈 오브젝트
 
     GameObject cloneItem;
+    GameObject cloneBox;
     public List<GameObject> list_Item;
 
     public GameObject item1;       // 인벤토리의 1번 아이템
     public GameObject item2;       // 인벤토리의 2번 아이템
 
+    GameObject[] checkPoint;
+
+    int BoxCountPerPoint;           // 체크포인트 마다의 박스 개수
+
     public bool select1 = false;
     public bool select2 = false;
 
 
-    void Awake()
+    void Start()
     {
-        itemFolder = new GameObject("Item").GetComponent<Transform>();
+        itemFolder = new GameObject("Item").GetComponent<Transform>();      // 하이라키상 아이템폴더 만들기
 
         list_Item = new List<GameObject>();
 
-        GameObject[] go = Resources.LoadAll<GameObject>("Prefabs/Items");      // 아이템 프리펩 로드
+        GameObject go = Resources.Load<GameObject>("Prefabs/Box/Box_Square");      // 박스 프리팹 로드
+
+        checkPoint = GameObject.FindGameObjectsWithTag("CheckPoint");
+
+        BoxCountPerPoint = 5;
 
 
-        // 클론 생성하고 아이템 리스트에 Add
-        for (int i = 0; i < (int)ItemType.ITEM_MAX; i++)
+        for (int i = 0; i < checkPoint.Length; i++)
         {
-            cloneItem = Instantiate(go[i]);
-            cloneItem.SetActive(false);
-            cloneItem.transform.SetParent(itemFolder);
-            list_Item.Add(cloneItem);
+            for (int j = 0; j < BoxCountPerPoint; j++)
+            {
+                cloneBox = Instantiate(go);
+                cloneBox.transform.position = checkPoint[i].transform.position + checkPoint[i].transform.right * j * 5f;
+                cloneBox.transform.SetParent(itemFolder);       // 하이라키상 아이템폴더에 넣기
+            }
         }
-	}
+
+        GameObject[] temp_go = Resources.LoadAll<GameObject>("Prefabs/Item");
+
+        //클론 생성하고 아이템 리스트에 Add
+        for (int i = 0; i < temp_go.Length; i++)
+        {
+            //cloneItem = Instantiate(temp_go[i]);
+            //cloneItem.SetActive(false);
+
+            //cloneItem.transform.SetParent(itemFolder);
+            list_Item.Add(temp_go[i]);
+        }
+    }
+
+
+
 
 
     void Update()
@@ -95,7 +120,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         else if (ItemManager.Instance.item2 == _go)
         {
             select2 = !select2;
-
+            
             item2 = null;
         }
     }

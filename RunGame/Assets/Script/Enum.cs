@@ -44,7 +44,6 @@ public enum EnemyType
 
 public enum AIType
 {
-    NONE,
     IDLE,
     RUN,
 }
