@@ -25,11 +25,10 @@ public enum RoomType
 
 public enum ItemType
 {
-    ITEM_RAZER,         // 레이저(즉살)
     ITEM_STUNGUN,       // 스턴건
     ITEM_INVISI,        // 투명망토
-    ITEM_DUMMYTRAP,     // 더미트랩
     ITEM_EXPLOTRAP,     // 폭발트랩
+    ITEM_DUMMYTRAP,     // 더미트랩
     ITEM_MAX
 }
 
@@ -46,5 +45,7 @@ public enum AIType
 {
     IDLE,
     RUN,
+    GETBOX,
+    ATTACK,
 }
 

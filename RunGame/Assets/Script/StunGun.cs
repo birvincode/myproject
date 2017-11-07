@@ -12,6 +12,7 @@ public class StunGun : Item
         get { return _stunGunCollider; }
     }
 
+    
 
     private void Update()
     {
@@ -20,22 +21,24 @@ public class StunGun : Item
 
     void UseStunGun()
     {
-        if ((ItemManager.Instance.select1 && ItemManager.Instance.item1 == gameObject) ||
-            (ItemManager.Instance.select2 && ItemManager.Instance.item2 == gameObject))
+
+        if (Input.GetMouseButtonDown(0) && transform.root.tag.Equals("Player"))
         {
-            if (Input.GetMouseButtonDown(0))        // 마우스 왼쪽버튼 눌렀을 때
-            {
+            Physics.Raycast(playerTr.position, playerTr.forward, out hit, 100f);                // 레이를 쏴서 Enemy만 걸러냄
 
-                //QueryTriggerInteraction
-                Physics.Raycast(playerTr.position, playerTr.forward, out hit, 100f);        // 레이를 쏴서 Enemy만 걸러냄
+            Debug.DrawRay(playerTr.position, playerTr.forward * 100f, Color.red, 10f);
 
-                Debug.DrawRay(playerTr.position, playerTr.forward * 100f, Color.red, 10f);
+            _stunGunCollider = hit.collider;
 
-                _stunGunCollider = hit.collider;
-
-                ItemManager.Instance.DiscardItem(this.gameObject);
-                this.gameObject.SetActive(false);
-            }
+            this.gameObject.SetActive(false);
         }
     }
+
+
+
+    protected override void GetItem()
+    {
+        this.transform.SetParent(playerTr.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
+    }
+
 }

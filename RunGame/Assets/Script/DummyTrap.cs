@@ -12,16 +12,20 @@ public class DummyTrap : Item
 
     void UseDummyTrap() // ToDo 좌표수정
     {
-        if ((ItemManager.Instance.select1 && ItemManager.Instance.item1 == gameObject) ||
-            (ItemManager.Instance.select2 && ItemManager.Instance.item2 == gameObject))
+        if (transform.root.tag.Equals("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 Debug.Log("더미사용");
                 this.transform.parent = ItemManager.Instance.itemFolder;
 
-                ItemManager.Instance.DiscardItem(this.gameObject);
             }
         }
+    }
+
+    protected override void GetItem()
+    {
+        this.transform.SetParent(playerTr.Find("Model/EvilbearG/Root_M/Spine1_M"));
+        this.transform.position = playerTr.forward;
     }
 }

@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - CheckPoint
+  - Box
+  - StunGun
+  - Invisi
+  - ExploTrap
+  - DummyTrap
   layers:
   - Default
   - TransparentFX

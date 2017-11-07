@@ -8,14 +8,6 @@ public class ActorManager : MonoSingleton<ActorManager>
     public GameObject cloneEnemy;
 
 
-    bool _isDead;
-
-    public bool isDead
-    {
-        get { return _isDead; }
-        set { _isDead = value; }
-    }
-
     void Awake()
     {
         list_Enemy = new List<GameObject>();        // 에너미 리스트 동적 할당

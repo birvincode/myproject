@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4337365118516088}
   m_Layer: 0
   m_Name: Box_Circle
-  m_TagString: Untagged
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -19,8 +19,6 @@ public class PlayerMove : MonoBehaviour
         playerSpeed = 15.0f;
     }
 
-
-
     void Update()
     {
         moveDir = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")) * Time.deltaTime * playerSpeed;
@@ -33,4 +31,6 @@ public class PlayerMove : MonoBehaviour
         lookDir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         transform.transform.LookAt(lookDir);
     }
+
+
 }

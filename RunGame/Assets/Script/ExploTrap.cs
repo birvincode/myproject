@@ -20,16 +20,14 @@ public class ExploTrap : Item
 
     void UseExploTrap()
     {
-        if ((ItemManager.Instance.select1 && ItemManager.Instance.item1 == gameObject) ||
-            (ItemManager.Instance.select2 && ItemManager.Instance.item2 == gameObject))
+        if (transform.root.tag.Equals("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 this.transform.parent = ItemManager.Instance.itemFolder;
-                this.transform.position = playerTr.forward;
-                this.transform.localRotation = Quaternion.Euler(90f, -90f, 0f);
+                this.transform.position = playerTr.position + new Vector3(0f, 0f, -1f);
+                this.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
-                ItemManager.Instance.DiscardItem(this.gameObject);
             }
         }
     }
@@ -43,4 +41,5 @@ public class ExploTrap : Item
             this.gameObject.SetActive(false);
         }
     }
+
 }

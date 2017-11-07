@@ -23,19 +23,18 @@ public class Invisi : Item
 
     void UseInvisi()        // ToDo 최적화 필요
     {
-        if ((ItemManager.Instance.select1 && ItemManager.Instance.item1 == gameObject) ||
-            (ItemManager.Instance.select2 && ItemManager.Instance.item2 == gameObject))
+        if (transform.root.tag.Equals("Player"))
         {
             stackTime += Time.deltaTime;
 
-            SkinnedMeshRenderer playerMesh = playerTr.Find("Model/EvilbearG/Evilbear").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer playerMesh = playerTr.Find("Character_2_geometry1").GetComponent<SkinnedMeshRenderer>();
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && onInvisi == false)     // 마우스 왼쪽버튼 눌렀을 때
             {
                 Debug.Log("투명망토 사용");
                 stackTime = 0f;
                 onInvisi = true;
-                playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 0.2f);
+                playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 0.3f);
                 this.transform.localScale = Vector3.zero;
             }
 
@@ -45,9 +44,10 @@ public class Invisi : Item
                 playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 1f);
                 onInvisi = false;
 
-                ItemManager.Instance.DiscardItem(this.gameObject);
                 this.gameObject.SetActive(false);
             }
         }
     }
+
+
 }

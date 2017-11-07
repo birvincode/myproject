@@ -20,8 +20,8 @@ public class Razer : Item
 
     void UseRazer()
     {
-        if ((ItemManager.Instance.select1 && ItemManager.Instance.item1 == gameObject) ||
-            (ItemManager.Instance.select2 && ItemManager.Instance.item2 == gameObject))
+        if (Input.GetMouseButtonDown(0) && transform.root.tag.Equals("Player"))
+
         {
             if (Input.GetMouseButtonDown(0))        // 마우스 왼쪽버튼 눌렀을 때
             {
@@ -31,10 +31,15 @@ public class Razer : Item
 
                 _razerCollider = hit.collider;
 
-                ItemManager.Instance.DiscardItem(this.gameObject);
                 this.gameObject.SetActive(false);
             }
         }
+    }
 
+    protected override void GetItem()
+    {
+        this.transform.SetParent(playerTr.Find("Model/EvilbearG/Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R/Elbow_R/Wrist_R"));
+        this.transform.localPosition = Vector3.zero;
+        this.transform.localRotation = Quaternion.Euler(-90f, -160f, 70f);
     }
 }
