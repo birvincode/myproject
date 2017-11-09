@@ -3348,7 +3348,7 @@ Animator:
   m_GameObject: {fileID: 1818858691927562}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 04e643a00918e6048b759d023460edc6, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8d382404ede7e1944970218b83a887c8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4541dc02e5a128743a50703e9c125cc3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3770,7 +3770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23a96e25b9856e4a80d90d76481f876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  belongItem: {fileID: 0}
+  invenItem: {fileID: 0}
 --- !u!136 &136228828558640284
 CapsuleCollider:
   m_ObjectHideFlags: 1

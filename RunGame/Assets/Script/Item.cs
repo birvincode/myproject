@@ -8,22 +8,24 @@ public class Item : MonoBehaviour
 
     public int itemType = 0;
 
+    protected Actor actor;
+
+    public bool isItemUsed = false;
+
     protected void Start()
     {
-        playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        //enemy = GameObject.FindGameObjectWithTag("ENEMY").GetComponent<Enemy>();
+        actor = transform.root.GetComponent<Actor>();
     }
-
-
-    protected virtual void GetItem()
+    
+    void Update()
     {
-        //if (ItemManager.Instance.item1 == null || ItemManager.Instance.item2 == null)
-        {
-            //itemType = Random.Range(0, (int)ItemType.ITEM_MAX);
-            itemType = 1;
-
-            //ItemManager.Instance.AddItemToInven(this.gameObject);
-            this.gameObject.SetActive(false);
-        }
+        UseItem();
     }
+
+
+    protected virtual void UseItem()
+    {
+
+    }
+
 }

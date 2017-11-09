@@ -4,57 +4,72 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    public GameObject belongItem;
+    public GameObject invenItem; // Actor가 가지고 있는 아이템
+
+    Item item;
+    BaseAI baseAI;
 
 	void Start ()
     {
-		
-	}
+
+    }
 	
 	void Update ()
     {
-		
+        ClearInven();
 	}
 
-
+    // 박스와 충돌시 아이템 먹기
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Box"))
+        if (invenItem == null && other.tag.Equals("Box"))
         {
+            ItemManager.Instance.list_Box.Remove(other.gameObject);
             other.gameObject.SetActive(false);
-            
-            GameObject go =  ItemManager.Instance.GachaItem();
 
-            belongItem = go;
+            invenItem = ItemManager.Instance.GachaItem();
+            item = invenItem.GetComponent<Item>();
 
-            switch (go.tag)
+            switch (invenItem.tag)
             {
                 case "StunGun":
                     {
-                        go.transform.SetParent(transform.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
-                        go.transform.localPosition = Vector3.zero;
-                        go.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                        invenItem.transform.SetParent(transform.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
+                        invenItem.transform.localPosition = Vector3.zero;
+                        invenItem.transform.localRotation = Quaternion.Euler(Vector3.zero);
                     }
                     break;
 
                 case "Invisi":
                     {
-                        go.transform.SetParent(transform.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
-                        go.transform.localPosition = Vector3.zero;
-                        go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-                        go.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                        invenItem.transform.SetParent(transform.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
+                        invenItem.transform.localPosition = Vector3.zero;
+                        invenItem.transform.localRotation = Quaternion.Euler(Vector3.zero);
+                        invenItem.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
                     }
                     break;
 
                 case "ExploTrap":
                     {
-                        go.transform.SetParent(transform.Find("Root2/Spine"));
-                        go.transform.localPosition = new Vector3(0f, 0f, -0.4f);
-                        go.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
-                        go.transform.localScale = new Vector3(3f, 3f, 3f);
+                        invenItem.transform.SetParent(transform.Find("Root2/Spine"));
+                        invenItem.transform.localPosition = new Vector3(0f, 0f, -0.4f);
+                        invenItem.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
+                        invenItem.transform.localScale = new Vector3(3f, 3f, 3f);
                     }
                     break;
             }
+            Debug.Log(invenItem);
+
         }
+    }
+    
+    void ClearInven()
+    {
+        if(item != null && item.isItemUsed)
+        {
+            invenItem = null;
+            item.isItemUsed = false;
+        }
+
     }
 }

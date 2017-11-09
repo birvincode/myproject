@@ -16,18 +16,15 @@ public class Invisi : Item
         set { _onInvisi = value; }
     }
 
-    private void Update()
-    {
-        UseInvisi();
-    }
 
-    void UseInvisi()        // ToDo 최적화 필요
+
+    protected override void UseItem()        // ToDo 최적화 필요
     {
         if (transform.root.tag.Equals("Player"))
         {
             stackTime += Time.deltaTime;
 
-            SkinnedMeshRenderer playerMesh = playerTr.Find("Character_2_geometry1").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer playerMesh = transform.root.Find("Character_2_geometry1").GetComponent<SkinnedMeshRenderer>();
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && onInvisi == false)     // 마우스 왼쪽버튼 눌렀을 때
             {
@@ -44,7 +41,10 @@ public class Invisi : Item
                 playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 1f);
                 onInvisi = false;
 
+                isItemUsed = true;
+                
                 this.gameObject.SetActive(false);
+
             }
         }
     }

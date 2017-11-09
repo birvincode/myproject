@@ -25,6 +25,8 @@ public class ItemManager : MonoSingleton<ItemManager>
     public Queue<GameObject> list_ExploTrap = new Queue<GameObject>();
     public Queue<GameObject> list_DummyTrap = new Queue<GameObject>();
 
+    public List<GameObject> list_Box = new List<GameObject>();
+
 
     void Awake()
     {
@@ -37,10 +39,10 @@ public class ItemManager : MonoSingleton<ItemManager>
         LoadItem();
     }
 
-
+    // 박스 로드
     void LoadItemBox()
     {
-        GameObject go = Resources.Load<GameObject>("Prefabs/Box/Box_Square");      // 박스 프리팹 로드
+        GameObject go = Resources.Load<GameObject>("Prefabs/Box/Box_Square");      
 
         // 아이템 박스 생성
         for (int i = 0; i < checkPoint.Length; i++)
@@ -50,11 +52,12 @@ public class ItemManager : MonoSingleton<ItemManager>
                 cloneBox = Instantiate(go);
                 cloneBox.transform.position = checkPoint[i].transform.position + checkPoint[i].transform.right * j * 5f;
                 cloneBox.transform.SetParent(itemFolder);       // 하이라키상 아이템폴더에 넣기
+                list_Box.Add(cloneBox);
             }
         }
     }
 
-
+    // 아이템 로드
     void LoadItem()
     {
         dic_Item.Add((int)ItemType.ITEM_STUNGUN, list_StunGun);

@@ -8,14 +8,7 @@ public class Enemy : Actor
 
 
 
-    void Start ()
-    {
-	}
-	
-	void Update ()
-    {
-		
-	}
+
 
 
 

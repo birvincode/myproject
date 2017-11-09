@@ -824,6 +824,7 @@ GameObject:
   - component: {fileID: 114375025725032664}
   - component: {fileID: 54141965514466404}
   - component: {fileID: 136213420446560046}
+  - component: {fileID: 114711267100504644}
   m_Layer: 0
   m_Name: Enemy_A
   m_TagString: Untagged
@@ -3673,7 +3674,7 @@ Animator:
   m_GameObject: {fileID: 1685503016733056}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 04e643a00918e6048b759d023460edc6, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8d382404ede7e1944970218b83a887c8, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -3775,6 +3776,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curCheckPoint: 0
+--- !u!114 &114711267100504644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1685503016733056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1719027b7ef8c5b409cc63c6a3a7eb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invenItem: {fileID: 0}
 --- !u!136 &136213420446560046
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3883,7 +3896,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -44,8 +44,12 @@ public enum EnemyType
 public enum AIType
 {
     IDLE,
-    RUN,
+    STOP,
+    USEITEM,
     GETBOX,
     ATTACK,
+    RUN,
+    STUN,
+    HIT
 }
 

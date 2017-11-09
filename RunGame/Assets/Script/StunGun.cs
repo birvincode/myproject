@@ -12,33 +12,20 @@ public class StunGun : Item
         get { return _stunGunCollider; }
     }
 
-    
 
-    private void Update()
+    protected override void UseItem()
     {
-        UseStunGun();
-    }
-
-    void UseStunGun()
-    {
-
         if (Input.GetMouseButtonDown(0) && transform.root.tag.Equals("Player"))
         {
-            Physics.Raycast(playerTr.position, playerTr.forward, out hit, 100f);                // 레이를 쏴서 Enemy만 걸러냄
+            Physics.Raycast(transform.position, transform.forward, out hit, 100f);                // 레이를 쏴서 Enemy만 걸러냄
 
-            Debug.DrawRay(playerTr.position, playerTr.forward * 100f, Color.red, 10f);
+            Debug.DrawRay(transform.position, transform.forward * 100f, Color.red, 10f);
 
             _stunGunCollider = hit.collider;
+
+            isItemUsed = true;
 
             this.gameObject.SetActive(false);
         }
     }
-
-
-
-    protected override void GetItem()
-    {
-        this.transform.SetParent(playerTr.Find("Root2/Spine/Chest/r_clavicle/r_shoulder/r_elbow/r_wrist/r_hand"));
-    }
-
 }

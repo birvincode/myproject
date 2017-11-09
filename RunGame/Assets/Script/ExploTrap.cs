@@ -12,22 +12,19 @@ public class ExploTrap : Item
     }
 
 
-    private void Update()
-    {
-        UseExploTrap();
-    }
 
 
-    void UseExploTrap()
+    protected override void UseItem()
     {
         if (transform.root.tag.Equals("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 this.transform.parent = ItemManager.Instance.itemFolder;
-                this.transform.position = playerTr.position + new Vector3(0f, 0f, -1f);
+                this.transform.position = transform.root.position + new Vector3(0f, 0f, -1f);
                 this.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
+                isItemUsed = true;
             }
         }
     }
