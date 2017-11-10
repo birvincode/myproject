@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class BaseAI : MonoBehaviour
 {
     int prevAIType;
-    int curAIType = (int)AIType.IDLE;
+    public int curAIType = (int)AIType.IDLE;
 
     NavMeshAgent enemyAgent;
 
@@ -17,7 +17,7 @@ public class BaseAI : MonoBehaviour
 
     Actor[] actor;
 
-    Actor targetActor;
+    public Actor targetActor;
 
     Actor selfActor;
 
@@ -25,10 +25,15 @@ public class BaseAI : MonoBehaviour
 
     List<Actor> list_DistActor = new List<Actor>();
 
-    float stackTimeActor = 0f;
-    float stackTimeBox = 0f;
+    float stackTimeActor = 0.5f;
+    float stackTimeBox = 1f;
+    float delayTimeAttack = 5f;
+
+    float attackRange = 2f;
 
     bool isAttacked = false;
+    public bool isStunned = false;
+    bool isAttacking = false;
 
     void Start()
     {
@@ -54,7 +59,6 @@ public class BaseAI : MonoBehaviour
         SearchTarget();
         SearchBox();
         SetAIType();
-        Debug.Log(curAIType);
 
         RunAI();
     }
@@ -63,6 +67,8 @@ public class BaseAI : MonoBehaviour
     {
         if (curAIType == prevAIType)
             return;
+
+        Debug.Log(curAIType);
 
         switch (curAIType)
         {
@@ -121,16 +127,17 @@ public class BaseAI : MonoBehaviour
 
     void SetAIType()     //ToDo 무수한 예외상황 추가
     {
+        delayTimeAttack += Time.deltaTime;
+
         if (curCheckPoint == checkPoint.Length)
         {
             curAIType = (int)AIType.STOP;
         }
 
-        //else if (true)
-        //{
-        //    aiType = (int)AIType.STUN;
-        //    return;
-        //}
+        else if (isStunned)
+        {
+            curAIType = (int)AIType.STUN;
+        }
 
         else if (isAttacked)
         {
@@ -142,12 +149,13 @@ public class BaseAI : MonoBehaviour
             curAIType = (int)AIType.USEITEM;
         }
 
-        else if (Vector3.Distance(transform.position, targetActor.transform.position) < 5f)
+        else if (Vector3.Distance(transform.position, targetActor.transform.position) < attackRange && delayTimeAttack > 5f)
         {
             curAIType = (int)AIType.ATTACK;
+            delayTimeAttack = 0f;
         }
 
-        else if (Vector3.Distance(transform.position, targetBox.transform.position) < 10f)
+        else if (selfActor.invenItem == null && Vector3.Distance(transform.position, targetBox.transform.position) < 10f)
         {
             curAIType = (int)AIType.GETBOX;
         }
@@ -156,8 +164,6 @@ public class BaseAI : MonoBehaviour
         {
             curAIType = (int)AIType.RUN;
         }
-
-
     }
 
 
@@ -174,7 +180,7 @@ public class BaseAI : MonoBehaviour
                 break;
             }
         }
-        if (Vector3.Distance(enemyAgent.transform.position, enemyAgent.destination) <3f)
+        if (Vector3.Distance(enemyAgent.transform.position, enemyAgent.destination) <5f)
             curCheckPoint++;
     }
 
@@ -187,7 +193,7 @@ public class BaseAI : MonoBehaviour
     {
         stackTimeActor += Time.deltaTime;
 
-        if (stackTimeActor > 0.5f)
+        if (stackTimeActor >= 0.5f)
         {
             targetActor = list_DistActor[0];
 
@@ -205,7 +211,7 @@ public class BaseAI : MonoBehaviour
     void SearchBox()
     {
         stackTimeBox += Time.deltaTime;
-        if (stackTimeBox > 1f)
+        if (stackTimeBox >= 1f)
         {
             targetBox = ItemManager.Instance.list_Box[0];
 
@@ -228,8 +234,16 @@ public class BaseAI : MonoBehaviour
 
     void Attack()
     {
-        targetActor.GetComponent<BaseAI>().isAttacked = true;
-        transform.LookAt(targetActor.transform.position);
+        if(isAttacking == false)
+        {
+            targetActor.GetComponent<BaseAI>().isAttacked = true;
+            transform.LookAt(targetActor.transform.position);
+        }
+    }
+
+    void Stun()
+    {
+
     }
 
     void Hit()

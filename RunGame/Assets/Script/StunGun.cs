@@ -23,9 +23,23 @@ public class StunGun : Item
 
             _stunGunCollider = hit.collider;
 
+            _stunGunCollider.GetComponent<BaseAI>().isStunned = true;
+
             isItemUsed = true;
 
             this.gameObject.SetActive(false);
+        }
+        else if (baseAI.curAIType == (int)AIType.USEITEM && transform.root.tag.Equals("Enemy"))
+        {
+            Physics.Raycast(transform.position, baseAI.targetActor.transform.position, out hit, 100f);
+
+            Debug.DrawRay(transform.position, baseAI.targetActor.transform.position, Color.blue, 10f);
+
+            _stunGunCollider = hit.collider;
+
+            _stunGunCollider.GetComponent<BaseAI>().isStunned = true;
+
+            isItemUsed = true;
         }
     }
 }

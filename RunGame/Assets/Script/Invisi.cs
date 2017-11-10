@@ -16,6 +16,15 @@ public class Invisi : Item
         set { _onInvisi = value; }
     }
 
+    SkinnedMeshRenderer actorMesh;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        actorMesh = transform.root.Find("Character_2_geometry1").GetComponent<SkinnedMeshRenderer>();
+    }
+
 
 
     protected override void UseItem()        // ToDo 최적화 필요
@@ -24,27 +33,46 @@ public class Invisi : Item
         {
             stackTime += Time.deltaTime;
 
-            SkinnedMeshRenderer playerMesh = transform.root.Find("Character_2_geometry1").GetComponent<SkinnedMeshRenderer>();
-
             if (Input.GetKeyDown(KeyCode.Alpha1) && onInvisi == false)     // 마우스 왼쪽버튼 눌렀을 때
             {
-                Debug.Log("투명망토 사용");
                 stackTime = 0f;
                 onInvisi = true;
-                playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 0.3f);
+                actorMesh.material.color = new Color(actorMesh.material.color.r, actorMesh.material.color.g, actorMesh.material.color.b, 0.3f);
                 this.transform.localScale = Vector3.zero;
             }
 
             // 제한시간 끝나면 되돌리고 아이템 빼기
             if (stackTime >= invisiTime && onInvisi)
             {
-                playerMesh.material.color = new Color(playerMesh.material.color.r, playerMesh.material.color.g, playerMesh.material.color.b, 1f);
+                actorMesh.material.color = new Color(actorMesh.material.color.r, actorMesh.material.color.g, actorMesh.material.color.b, 1f);
                 onInvisi = false;
 
                 isItemUsed = true;
-                
-                this.gameObject.SetActive(false);
 
+                this.gameObject.SetActive(false);
+            }
+        }
+        else if (transform.root.tag.Equals("Enemy"))
+        {
+            stackTime += Time.deltaTime;
+
+            if (baseAI.curAIType == (int)AIType.USEITEM && onInvisi == false)     // 마우스 왼쪽버튼 눌렀을 때
+            {
+                stackTime = 0f;
+                onInvisi = true;
+                actorMesh.material.color = new Color(actorMesh.material.color.r, actorMesh.material.color.g, actorMesh.material.color.b, 0.3f);
+                this.transform.localScale = Vector3.zero;
+            }
+
+            // 제한시간 끝나면 되돌리고 아이템 빼기
+            if (stackTime >= invisiTime && onInvisi)
+            {
+                actorMesh.material.color = new Color(actorMesh.material.color.r, actorMesh.material.color.g, actorMesh.material.color.b, 1f);
+                onInvisi = false;
+
+                isItemUsed = true;
+
+                this.gameObject.SetActive(false);
             }
         }
     }

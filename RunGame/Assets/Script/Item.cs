@@ -12,11 +12,17 @@ public class Item : MonoBehaviour
 
     public bool isItemUsed = false;
 
-    protected void Start()
+    protected BaseAI baseAI;
+
+
+    protected virtual void Start()
     {
         actor = transform.root.GetComponent<Actor>();
+
+        baseAI = GetComponent<BaseAI>();
+
     }
-    
+
     void Update()
     {
         UseItem();
